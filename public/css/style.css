@@ -1,0 +1,243 @@
+/* body {
+    background-color: pink;
+} */
+
+body {
+    font-family: 'Jakarta Sans', sans-serif;
+}
+
+/* Navbar:- */
+
+.navbar {
+    height: 5rem;
+    background-color: white;
+}
+.fa-compass {
+    color: #fe424d;
+    font-size: 2rem;
+}
+.nav-link {
+    color: #222222 !important;
+}
+
+/* Footer:- */
+
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+main {
+    flex: 1; /* Ensures the main content takes up available space */
+}
+
+footer {
+    background-color: #f7f7f7;
+    padding: 20px 0;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    margin-top: auto;
+}
+
+.f-info {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.f-info-socials {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+}
+
+.f-info-socials i {
+    font-size: 24px;
+    margin: 0 10px;
+    color: #555;
+}
+
+.f-info div {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+}
+
+.f-info-links {
+    flex: 1;
+    min-width: 200px;
+    margin-bottom: 20px;
+}
+
+.f-info-links a {
+    display: block;
+    margin: 5px 0;
+    color: #555;
+    text-decoration: none;
+}
+
+.f-info-links a:hover {
+    text-decoration: underline;
+}
+
+footer p {
+    margin-top: 20px;
+    color: #555;
+}
+button.btn-success {
+    margin-bottom: 20px; /* Adjust this value to move the button upward */
+    padding: 10px 20px; /* Optional: Add padding for better appearance */
+    font-size: 16px; /* Optional: Adjust font size */
+    border-radius: 5px; /* Optional: Add rounded corners */
+}
+
+
+/* cards */
+
+.listing-card {
+    border: none !important;
+    margin-bottom: 2rem;
+    position: relative;
+}
+.card-img-top {
+    border-radius: 1rem !important;
+    width: 100% !important;
+    object-fit: cover !important;
+}
+.card-body {
+    padding: 0 !important;
+}
+.card-text p {
+    font-weight: 400;
+}
+
+/* card overlay effect */
+
+.card .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0);
+    transition: background-color 0.3s ease;
+    border-radius: 1rem !important;
+    opacity: 0;
+}
+
+.card:hover .overlay {
+    background-color: white;
+    opacity: 0.2;
+}
+
+/* NEw page */
+
+.add-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* Edit page */
+.edit-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+.upd-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* show page */
+
+.delete-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}
+.edit-btn {
+    background-color: #fe424d !important;
+    border: none !important;
+}
+
+/* (SignUP page) */
+/* Center the form and add spacing */
+.signup-container {
+    margin-top: 50px;
+    padding: 20px;
+    background-color: #f9f9f9; /* Light background for the form */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+/* Style the form labels */
+.signup-container .form-label {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Style the input fields */
+.signup-container .form-control {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 14px;
+}
+
+/* Add hover effect to input fields */
+.signup-container .form-control:focus {
+    border-color: #fe424d; /* Highlight color */
+    box-shadow: 0 0 5px rgba(254, 66, 77, 0.5);
+}
+
+/* Style the button */
+.signup-container .btn-success {
+    background-color: #fe424d; /* Custom color for the button */
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+/* Add hover effect to the button */
+.signup-container .btn-success:hover {
+    background-color: #e63946; /* Slightly darker shade */
+    color: #fff;
+}
+
+/* Center the heading */
+.signup-container h1 {
+    text-align: center;
+    color: #fe424d;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* reviews  */
+
+ 
+
+/* Delete Button Styling */
+.card-body .btn-dark {
+    background-color: #ff5a5f; /* Airbnb's signature red */
+    border: none;
+    color: white;
+    padding: 15px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 8px; /* Rounded corners */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+}
+
+.card-body .btn-dark:hover {
+    background-color: #e63946; /* Slightly darker red on hover */
+    transform: scale(1.05); /* Slight zoom effect on hover */
+    color: #fff;
+}
+

@@ -1,0 +1,203 @@
+<% layout("/layouts/boilerplate")%>
+
+<!-- styling -->
+<style>
+  /* #filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter {
+    text-align: center;
+    margin-right: 2rem;
+    margin-top: 2rem;
+    opacity: 0.7;
+  }
+  .filter:hover {
+    opacity: 1;
+    cursor: pointer;
+  }
+  .filter p {
+    font-size: 0.8rem;
+  } */
+
+#filters {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between; /* Distribute items across the full width */
+  gap: 1.2rem; /* more gap */
+  background: #f8fafc;
+  border-radius: 2rem;
+  padding: 1.2rem 2.5rem; /* more padding */
+  box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+  margin-bottom: 2.5rem;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  width: calc(100% - 3rem); /* ensure full width minus margin */
+  overflow-x: auto;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-width: 60px;   /* slightly smaller */
+  min-height: 60px;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+  opacity: 0.92;
+  margin: 0;
+  padding: 0.3rem 0.6rem;
+  flex: 0 0 auto;
+}
+
+.filter:hover {
+  opacity: 1;
+  background: #f0f2f5;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+  transform: translateY(-3px) scale(1.03);
+  cursor: pointer;
+}
+
+.filter i {
+  font-size: 1.1rem;
+  color: #23272f;    /* blackish, not pure black */
+  margin-bottom: 0.15rem;
+}
+
+.filter p {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #23272f;
+  margin: 0;
+}
+
+.tax-toogle {
+  display: flex;
+  align-items: center;
+  margin-left: 1.5rem;
+  background: #f5f7fa;
+  border: 1px solid #d1d5db;
+  border-radius: 2rem;
+  padding: 0.3rem 1.2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  font-size: 0.98rem;
+  opacity: 0.95;
+  transition: box-shadow 0.2s, background 0.2s;
+  flex: 0 0 auto;
+  height: 44px;
+}
+
+.tax-toogle:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  background: #e8f0fe;
+  opacity: 1;
+}
+
+.tax-toogle .form-check-label {
+  margin-left: 0.6rem;
+  font-weight: 500;
+  color: #23272f;
+  cursor: pointer;
+}
+
+.tax-toogle .form-check-input {
+  width: 1.6rem;
+  height: 1rem;
+  cursor: pointer;
+}
+</style>
+
+
+<div id="filters">
+  <div class="filter">
+    <div><i class="fa-solid fa-fire"></i></div>
+    <p>Trending</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-bed"></i></div>
+    <p>Rooms</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-mountain-city"></i></div>
+    <p>Iconic Cities</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-brands fa-fort-awesome"></i></div>
+    <p>Castles</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-person-swimming"></i></div>
+    <p>Amazing Pools</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-campground"></i></div>
+    <p>camping</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-tractor"></i></div>
+    <p>Farms</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-snowflake"></i></div>
+    <p>Arctic</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-igloo"></i></div>
+    <p>Domes</p>
+  </div>
+  <div class="filter">
+    <div><i class="fa-solid fa-sailboat"></i></div>
+    <p>Boats</p>
+  </div>
+  <div class="tax-toogle">
+    <div class="form-check-reverse form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+      <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+    </div>
+  </div>
+</div>
+
+<div class="row row-cols-lg-3 row-cols-md-3 mt-3 row-cols-sm-1 mt-3">
+  <% for (let listing of allListings) { %>
+    <a href="/listings/<%= listing._id %>" class="listing-link" style="text-decoration: none;">
+      <div class="card col listing-card">
+        <!-- Image Section -->
+        <img 
+          class="card-img-top" 
+          src="<%= listing.image.url %>" 
+          alt="listing_image" 
+          style="height: 20rem" />
+
+        <!-- Card Body -->
+        <div class="card-body">
+          <p class="card-text">
+            <b><%= listing.title %></b> <br>
+            &#8377; <%= listing.price %> /Night 
+            <i class="tax-info">&nbsp;+18% GST</i>
+          </p>
+        </div>
+      </div>
+    </a>
+  <% } %>
+</div>
+
+<script>
+  let taxSwitch=document.getElementById("switchCheckDefault");
+  taxSwitch.addEventListener("click",()=> {
+  let taxInfo=document.getElementsByClassName("tax-info");
+  for (info of taxInfo) {
+    if(info.style.display != "inline") {
+      info.style.display = "inline";
+    } else {
+      info.style.display = "none";
+    }
+  }
+
+  })
+</script>

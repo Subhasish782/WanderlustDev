@@ -1,0 +1,53 @@
+<% layout('/layouts/Boilerplate') -%>
+<body>
+<div class="row">
+    <div class="col-8 offset-2">
+    <h1>Create a New Listing</h1>
+    <form action="/listings" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" name="listing[title]" required class="form-control" aria-describedby="titleFeedback">
+            <div class="valid-feedback" id="titleFeedback">Please provide a title.</div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="description" class="form-label"> Description:</label>
+            <textarea name="listing[description]" placeholder="enter description" 
+                      class="form-control" required>
+            </textarea>
+  
+            <div class="invalid-feedback">Please enter a short description</div>
+          </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label"> Upload Listing Image: </label>
+            <input name="listing[image]"  type="file" class="form-control" required/>
+        </div>
+
+        <div class="row">
+            <div class="mb-3 col-md-4">
+                <label for="price">Price:</label>
+                <input type="text" id="price" name="listing[price]" required class="form-control" aria-describedby="priceFeedback">
+                <div class="invalid-feedback" id="priceFeedback">Please enter a valid price.</div>
+            </div>
+    
+            <div class="mb-3 col-md-8">
+                <label for="country">Country:</label>
+                <input type="text" id="country" name="listing[country]" required class="form-control" aria-describedby="countryFeedback">
+                <div class="invalid-feedback" id="countryFeedback">Please enter the country!</div>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label for="location">Location:</label>
+            <input type="text" id="location" name="listing[location]" required class="form-control" aria-describedby="locationFeedback">
+            <div class="invalid-feedback" id="locationFeedback">Please enter a valid location!</div>
+        </div>
+        
+        <br/><br/>
+        <button type="submit" class="btn btn-dark add-btn">Create Listing</button>
+    </form>
+    <br/><br/>
+    </div>
+</div>
+</body>
