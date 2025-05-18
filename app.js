@@ -1,11 +1,7 @@
 if(process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
-if (!process.env.SECRET || !process.env.ATLASDB_URL) {
-    console.error('ERROR: Missing required environment variables');
-    console.error('Please ensure both SECRET and ATLASDB_URL are set in your .env file');
-    process.exit(1);
-}
+// console.log(process.env.SECRET);
 
 const express = require('express');
 const app = express();
@@ -39,10 +35,7 @@ const dbUrl=process.env.ATLASDB_URL;
 // Database connection
 mongoose.connect(dbUrl)
     .then(() => console.log('Connected to database'))
-    .catch(err => {
-        console.error('Database connection error:', err);
-        process.exit(1);
-    });
+    .catch(err => console.error('Database connection error:', err));
 
 // Middleware
 app.engine('ejs', ejsMate);
@@ -70,8 +63,8 @@ const sessionOption = {
     resave:false,
     saveUninitialized:true,
     cookie: {
-        expires:Date.now() + 7 * 24 * 60 * 60 *1000, // 7 days
-        maxAge:7 * 24 * 60 * 60 *1000, // 7 days
+        expires:Date.now() + 7 * 24 * 60 * 60 *1000,  // Should use new Date()
+        maxAge:7 * 24 * 60 * 60 *1000,
         httpOnly:true,
     }
 }
@@ -109,10 +102,9 @@ app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
 
-
-app.all("*", (req, res, next) => {
+app.all("*"), (req, res) => {  // Incorrect syntax with comma
     next(new expressError("Page not found", 404));
-});
+}
 
 // Error-handling middleware:-
 app.use((err, req, res, next) => {
@@ -125,6 +117,5 @@ app.use((err, req, res, next) => {
 app.listen(port, () => {
     console.log(`Server is listening on port ${port}`);
 });
-
 
 
