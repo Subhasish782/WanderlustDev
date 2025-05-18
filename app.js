@@ -1,7 +1,11 @@
 if(process.env.NODE_ENV !== "production") {
     require('dotenv').config();
 }
-// console.log(process.env.SECRET);
+if (!process.env.SECRET || !process.env.ATLASDB_URL) {
+    console.error('ERROR: Missing required environment variables');
+    console.error('Please ensure both SECRET and ATLASDB_URL are set in your .env file');
+    process.exit(1);
+}
 
 const express = require('express');
 const app = express();
@@ -35,7 +39,10 @@ const dbUrl=process.env.ATLASDB_URL;
 // Database connection
 mongoose.connect(dbUrl)
     .then(() => console.log('Connected to database'))
-    .catch(err => console.error('Database connection error:', err));
+    .catch(err => {
+        console.error('Database connection error:', err);
+        process.exit(1);
+    });
 
 // Middleware
 app.engine('ejs', ejsMate);
@@ -54,7 +61,7 @@ const store = MongoStore.create({
     touchAfter:24 * 3600,
 });
 
-store.on("error",()=> {
+store.on("error",(err)=> {
     console.log("ERROR in MONGO SESSION STORE",err);
 })
 const sessionOption = {
@@ -102,9 +109,10 @@ app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
 
-app.all("*"), (req, res) => {
+
+app.all("*", (req, res, next) => {
     next(new expressError("Page not found", 404));
-}
+});
 
 // Error-handling middleware:-
 app.use((err, req, res, next) => {
