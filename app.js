@@ -33,8 +33,11 @@ const dbUrl=process.env.ATLASDB_URL;
 
 
 // Database connection
-mongoose.connect(dbUrl)
-    .then(() => console.log('Connected to database'))
+mongoose.connect(dbUrl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+    .then(() => console.log('Connected to MongoDB Atlas'))
     .catch(err => console.error('Database connection error:', err));
 
 // Middleware
@@ -49,23 +52,33 @@ app.use(express.static(path.join(__dirname, 'public')));
 const store = MongoStore.create({
     mongoUrl: dbUrl,
     crypto: {
-        secret:process.env.SECRET,
+        secret: process.env.SECRET || 'fallback_secret'
     },
-    touchAfter:24 * 3600,
+    touchAfter: 24 * 3600,
+    mongoOptions: {
+        useNewUrlParser: true,
+        useUnifiedTopology: true
+    }
 });
 
-store.on("error",(err)=> {
-    console.log("ERROR in MONGO SESSION STORE",err);
-})
+store.on("error", (err) => {
+    console.error("ERROR in MONGO SESSION STORE:", err);
+});
+
+store.on("connected", () => {
+    console.log("Session Store Connected Successfully");
+});
+
 const sessionOption = {
     store,
-    secret:process.env.SECRET,
-    resave:false,
-    saveUninitialized:true,
+    secret: process.env.SECRET || 'fallback_secret',
+    resave: false,
+    saveUninitialized: false,
     cookie: {
-        expires:Date.now() + 7 * 24 * 60 * 60 *1000,  // Should use new Date()
-        maxAge:7 * 24 * 60 * 60 *1000,
-        httpOnly:true,
+        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production"
     }
 }
 
@@ -102,9 +115,9 @@ app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
 
-app.all("*"), (req, res) => {  // Incorrect syntax with comma
+app.all("*", (req, res, next) => {
     next(new expressError("Page not found", 404));
-}
+});
 
 // Error-handling middleware:-
 app.use((err, req, res, next) => {
