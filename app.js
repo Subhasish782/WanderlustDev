@@ -23,9 +23,10 @@ const userRouter = require("./routes/user");
 // MongoDB Connection
 const dbUrl = process.env.ATLAS_URL;
 
-main().catch(err => console.log(err));
+main()
+.catch(err => console.log(err));
 async function main() {
-    await mongoose.connect(dbUrl);
+    mongoose.connect(dbUrl);
     console.log("Connected to database");
 }
 
