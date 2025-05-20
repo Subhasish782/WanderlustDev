@@ -22,9 +22,11 @@ const User= require('./models/user');
 
 
 
+
 const listingsRouter = require("./routes/listing");
 const reviewsRouter = require("./routes/review");
 const userRouter = require("./routes/user");
+const { Server } = require("http");
 
 
 
@@ -92,11 +94,12 @@ app.all("*", (req, res, next) => {
     next(new expressError(404, "Page not found!!"));
 }); 
 
-
+// Error handling middleware 
 app.use((err, req, res, next) => {
-    let {statusCode=500, message="something went wrong"} = err;
-    res.status(statusCode).send(message);
-}); 
+    const { statusCode = 500, message = "Something went wrong" } = err;
+    console.error(`Error: ${message} (Status Code: ${statusCode})`);
+    res.status(statusCode).render('error', { err: { message, statusCode } });
+});
 
 
 app.listen(3000, () => {
