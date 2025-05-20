@@ -28,17 +28,22 @@ const userRouter = require("./routes/user");
 
 
 const port = process.env.PORT || 3000;
-// const MONGO_URI = 'mongodb://localhost:27017/wanderlust';
-const dbUrl=process.env.ATLASDB_URL;
+const dbUrl = process.env.ATLASDB_URL;
+if (!dbUrl) {
+    console.error('MongoDB URL not found in environment variables');
+    process.exit(1);
+}
 
+// Database connection with better error handling
+main().catch(err => {
+    console.error('Database connection error:', err);
+    process.exit(1);
+});
 
-// Database connection
-mongoose.connect(dbUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-})
-    .then(() => console.log('Connected to MongoDB Atlas'))
-    .catch(err => console.error('Database connection error:', err));
+async function main() {
+    await mongoose.connect(dbUrl);
+    console.log('Connected to MongoDB Atlas');
+}
 
 // Middleware
 app.engine('ejs', ejsMate);
@@ -48,40 +53,39 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
-
+// Session store configuration with proper error handling
 const store = MongoStore.create({
     mongoUrl: dbUrl,
+    touchAfter: 24 * 3600,
     crypto: {
         secret: process.env.SECRET || 'fallback_secret'
     },
-    touchAfter: 24 * 3600,
     mongoOptions: {
         useNewUrlParser: true,
         useUnifiedTopology: true
     }
 });
 
-store.on("error", (err) => {
-    console.error("ERROR in MONGO SESSION STORE:", err);
+store.on("error", function(error) {
+    console.error("Session Store Error:", error);
 });
 
-store.on("connected", () => {
-    console.log("Session Store Connected Successfully");
+store.on("connected", function() {
+    console.log("Session Store Connected");
 });
 
 const sessionOption = {
     store,
     secret: process.env.SECRET || 'fallback_secret',
     resave: false,
-    saveUninitialized: false,
+    saveUninitialized: true,
     cookie: {
-        expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
+        expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
         maxAge: 7 * 24 * 60 * 60 * 1000,
         httpOnly: true,
         secure: process.env.NODE_ENV === "production"
     }
 }
-
 
 app.use(session(sessionOption));
 app.use(flash());
