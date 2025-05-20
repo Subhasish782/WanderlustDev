@@ -27,7 +27,7 @@ const userRouter = require("./routes/user");
 
 
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 // const MONGO_URI = 'mongodb://localhost:27017/wanderlust';
 const dbUrl=process.env.ATLASDB_URL;
 
