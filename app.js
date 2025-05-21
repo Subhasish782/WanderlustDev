@@ -2,6 +2,7 @@ if (process.env.NODE_ENV != "production") {
     require("dotenv").config();
 } 
 
+// Import required packages
 const express = require('express');
 const app = express();
 const path = require('path');
@@ -16,16 +17,16 @@ const methodOverride = require('method-override');
 const expressError = require('./utils/expressError');
 const User = require('./models/user');
 
+// Import routes
 const listingsRouter = require("./routes/listing");
 const reviewsRouter = require("./routes/review");
 const userRouter = require("./routes/user");
-const { clear } = require("console");
 
 // MongoDB Connection
 const dbUrl = process.env.ATLAS_URL;
+const mongoUrl = process.env.MONGO_URL || "mongodb://localhost:27017/wanderlust";
 
-
-mongoose.connect(dbUrl)
+mongoose.connect(dbUrl || mongoUrl)
     .then(() => {
         console.log("Connected to MongoDB Atlas");
     })
