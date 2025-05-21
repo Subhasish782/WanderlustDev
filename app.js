@@ -21,7 +21,7 @@ const User = require('./models/user');
 const listingsRouter = require("./routes/listing");
 const reviewsRouter = require("./routes/review");
 const userRouter = require("./routes/user");
-const { name } = require("ejs");
+
 
 // MongoDB Connection
 const dbUrl = process.env.ATLAS_URL;
