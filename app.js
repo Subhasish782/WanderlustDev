@@ -24,9 +24,9 @@ const userRouter = require("./routes/user");
 
 // MongoDB Connection
 const dbUrl = process.env.ATLAS_URL;
-const mongoUrl = process.env.MONGO_URL || "mongodb://localhost:27017/wanderlust";
+// const mongoUrl = process.env.MONGO_URL || "mongodb://localhost:27017/wanderlust";
 
-mongoose.connect(dbUrl || mongoUrl)
+mongoose.connect(dbUrl)
     .then(() => {
         console.log("Connected to MongoDB Atlas");
     })
