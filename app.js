@@ -21,6 +21,7 @@ const User = require('./models/user');
 const listingsRouter = require("./routes/listing");
 const reviewsRouter = require("./routes/review");
 const userRouter = require("./routes/user");
+const { name } = require("ejs");
 
 // MongoDB Connection
 const dbUrl = process.env.ATLAS_URL;
@@ -59,9 +60,15 @@ store.on("error", (err) => {
 
 const sessionOptions = {
     store,
+    name: "session",
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // expires in 1 week
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
 };
 
 app.use(session(sessionOptions));
@@ -96,7 +103,7 @@ app.all("*", (req, res, next) => {
 
 app.use((err, req, res, next) => {
     let {statusCode=500, message="something went wrong"} = err;
-    res.status(statusCode).send(message);
+    res.send(statusCode).send(message);
 }); 
 
 
