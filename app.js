@@ -79,7 +79,7 @@ passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-    res.locals.currUser = req.user;
+    res.locals.currentUser = req.user;
     next();
 });
 
@@ -93,11 +93,12 @@ app.all("*", (req, res, next) => {
     next(new expressError(404, "Page not found!!"));
 });
 
+
 app.use((err, req, res, next) => {
-    const { statusCode = 500, message = "Something went wrong" } = err;
-    console.error(`Error: ${message} (Status Code: ${statusCode})`);
-    res.status(statusCode).render('error', { err: { message, statusCode } });
-});
+    let {statusCode=500, message="something went wrong"} = err;
+    res.status(statusCode).send(message);
+}); 
+
 
 // Server Start
 app.listen(3000, () => {
