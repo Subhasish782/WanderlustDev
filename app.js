@@ -19,20 +19,19 @@ const User = require('./models/user');
 const listingsRouter = require("./routes/listing");
 const reviewsRouter = require("./routes/review");
 const userRouter = require("./routes/user");
+const { clear } = require("console");
 
 // MongoDB Connection
 const dbUrl = process.env.ATLAS_URL;
 
-mongoose.connect(dbUrl, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    tls: true,
-    tlsInsecure: true
-}).then(() => {
-    console.log("Connected to MongoDB Atlas");
-}).catch(err => {
-    console.error("MongoDB connection error:", err);
-});
+
+mongoose.connect(dbUrl)
+    .then(() => {
+        console.log("Connected to MongoDB Atlas");
+    })
+    .catch(err => {
+        console.error("MongoDB connection error:", err);
+    });
 
 // App Configuration
 app.engine('ejs', ejsMate);
