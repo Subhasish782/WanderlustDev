@@ -22,7 +22,6 @@ const listingsRouter = require("./routes/listing");
 const reviewsRouter = require("./routes/review");
 const userRouter = require("./routes/user");
 
-
 // MongoDB Connection
 const dbUrl = process.env.ATLAS_URL;
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost:27017/wanderlust";
@@ -100,12 +99,10 @@ app.all("*", (req, res, next) => {
     next(new expressError(404, "Page not found!!"));
 });
 
-
 app.use((err, req, res, next) => {
     let {statusCode=500, message="something went wrong"} = err;
     res.send(statusCode).send(message);
 }); 
-
 
 // Server Start
 app.listen(3000, () => {
