@@ -6,6 +6,10 @@ const Listing = require('../models/listing');
 module.exports.createReview = async(req, res) => {
    
     let listing = await Listing.findById(req.params.id);
+    if (!listing) {
+        req.flash("error", "Listing not found!");
+        return res.redirect("/listings");
+    }
     req.body.review.rating = Number(req.body.review.rating);
     let newReview = new Review(req.body.review);
     newReview.author = req.user._id;
