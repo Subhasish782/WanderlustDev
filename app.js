@@ -24,6 +24,9 @@ const userRouter = require("./routes/user");
 
 // MongoDB Connection
 const dbUrl = process.env.ATLAS_URL;
+if (!dbUrl) {
+    throw new Error("ATLAS_URL environment variable is not set. Please set it to your MongoDB connection string.");
+}
 // const mongoUrl = process.env.MONGO_URL || "mongodb://localhost:27017/wanderlust";
 
 mongoose.connect(dbUrl)
