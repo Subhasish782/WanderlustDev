@@ -21,21 +21,22 @@ const User = require('./models/user');
 const listingsRouter = require("./routes/listing");
 const reviewsRouter = require("./routes/review");
 const userRouter = require("./routes/user");
+const {server} = require('http');
 
 // MongoDB Connection
 const dbUrl = process.env.ATLAS_URL;
-if (!dbUrl) {
-    throw new Error("ATLAS_URL environment variable is not set. Please set it to your MongoDB connection string.");
-}
-// const mongoUrl = process.env.MONGO_URL || "mongodb://localhost:27017/wanderlust";
 
-mongoose.connect(dbUrl)
-    .then(() => {
-        console.log("Connected to MongoDB Atlas");
-    })
-    .catch(err => {
-        console.error("MongoDB connection error:", err);
-    });
+main()
+.then(() => {
+    console.log("connected to DB")
+})
+.catch(() => {
+    console.log(err);
+});
+
+async function main() {  
+    await mongoose.connect(dbUrl);  
+}
 
 // App Configuration
 app.engine('ejs', ejsMate);
@@ -62,15 +63,14 @@ store.on("error", (err) => {
 
 const sessionOptions = {
     store,
-    name: "session",
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    cookie: {
-        httpOnly: true,
-        expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // expires in 1 week
-        maxAge: 1000 * 60 * 60 * 24 * 7
-    }
+    // cookie: {
+    //     httpOnly: true,
+    //     expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // expires in 1 week
+    //     maxAge: 1000 * 60 * 60 * 24 * 7
+    // }
 };
 
 app.use(session(sessionOptions));
