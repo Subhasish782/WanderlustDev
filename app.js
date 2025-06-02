@@ -56,7 +56,6 @@ const store = MongoStore.create({
         secret: process.env.SECRET
     },
     touchAfter: 24 * 3600,
-    collectionName: 'sessions'  // Optional: specify collection name
 });
 
 store.on("error", (err) => {
