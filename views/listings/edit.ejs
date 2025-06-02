@@ -21,10 +21,25 @@
                     <div class="invalid-feedback">Please enter the short description.</div>
                 </div>
 
+                <!-- Category Field -->
+                <div class="mb-3">
+                    <label for="category">Category:</label>
+                    <select id="category" name="listing[category]" class="form-control" required>
+                        <option value="trending" <%= listing.category === "trending" ? "selected" : "" %>>Trending</option>
+                        <option value="rooms" <%= listing.category === "rooms" ? "selected" : "" %>>Rooms</option>
+                        <option value="iconic-cities" <%= listing.category === "iconic-cities" ? "selected" : "" %>>Iconic Cities</option>
+                        <option value="castles" <%= listing.category === "castles" ? "selected" : "" %>>Castles</option>
+                        <option value="pools" <%= listing.category === "pools" ? "selected" : "" %>>Amazing Pools</option>
+                        <option value="camping" <%= listing.category === "camping" ? "selected" : "" %>>Camping</option>
+                        <option value="farms" <%= listing.category === "farms" ? "selected" : "" %>>Farms</option>
+                        <option value="arctic" <%= listing.category === "arctic" ? "selected" : "" %>>Arctic</option>
+                        <option value="domes" <%= listing.category === "domes" ? "selected" : "" %>>Domes</option>
+                        <option value="boats" <%= listing.category === "boats" ? "selected" : "" %>>Boats</option>
+                    </select>
+                    <div class="invalid-feedback">Please select a category.</div>
+                </div>
+
                 <!-- Image  Field -->
-
-
-
                 <div class="mb-3">
                     <label for="image">Upload New Image:</label>
                     <input type="file" 
@@ -32,7 +47,7 @@
                     class="form-control"
                     >
                 </div>
-                
+            
                 <!-- Price and Country Fields -->
                 <div class="row">
                     <div class="mb-3 col-md-4">

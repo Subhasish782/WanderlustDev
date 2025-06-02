@@ -1,7 +1,32 @@
 const Listing= require('../models/listing');
 
-module.exports.index=async (req, res) => {
-    const allListings = await Listing.find({});
+const categoryMap = {
+    "Trending": "trending",
+    "Rooms": "rooms",
+    "Iconic Cities": "iconic-cities",
+    "Castles": "castles",
+    "Amazing Pools": "pools",
+    "Camping": "camping",
+    "Farms": "farms",
+    "Arctic": "arctic",
+    "Domes": "domes",
+    "Boats": "boats"
+};
+
+module.exports.index = async (req, res) => {
+    const { category } = req.query;
+    let allListings;
+    if (category) {
+        const dbCategory = categoryMap[category] || category;
+        allListings = await Listing.find({ category: dbCategory });
+        // Optional: handle invalid category
+        if (!Object.keys(categoryMap).includes(category)) {
+            req.flash("error", "Invalid category selected.");
+            return res.redirect("/listings");
+        }
+    } else {
+        allListings = await Listing.find({});
+    }
     res.render("listings/index.ejs", { allListings });
 };
 

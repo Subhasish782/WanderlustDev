@@ -111,6 +111,15 @@
   height: 1rem;
   cursor: pointer;
 }
+
+.active-filter {
+  border: 2px solid #2563eb;
+  background: #e0e7ff;
+  box-shadow: 0 6px 18px rgba(37,99,235,0.10);
+  opacity: 1 !important;
+  transform: scale(1.05);
+}
+  
 </style>
 
 
@@ -188,16 +197,39 @@
 </div>
 
 <script>
-  let taxSwitch=document.getElementById("switchCheckDefault");
-  taxSwitch.addEventListener("click",()=> {
-  let taxInfo=document.getElementsByClassName("tax-info");
-  for (info of taxInfo) {
-    if(info.style.display != "inline") {
-      info.style.display = "inline";
-    } else {
-      info.style.display = "none";
-    }
-  }
-
-  })
+  // let taxSwitch=document.getElementById("switchCheckDefault");
+  // taxSwitch.addEventListener("click",()=> {
+  // let taxInfo=document.getElementsByClassName("tax-info");
+  // for (info of taxInfo) {
+  //   if(info.style.display != "inline") {
+  //     info.style.display = "inline";
+  //   } else {
+  //     info.style.display = "none";
+  //   }
+  // }
+  // })
+    // Existing tax switch code
+    let taxSwitch = document.getElementById("switchCheckDefault");
+    taxSwitch.addEventListener("click", () => {
+      let taxInfo = document.getElementsByClassName("tax-info");
+      for (info of taxInfo) {
+        if (info.style.display != "inline") {
+          info.style.display = "inline";
+        } else {
+          info.style.display = "none";
+        }
+      }
+    });
+  
+    // Make filters clickable and highlight active one
+    const filters = document.querySelectorAll('.filter');
+    filters.forEach(filter => {
+      filter.addEventListener('click', function() {
+        filters.forEach(f => f.classList.remove('active-filter'));
+        this.classList.add('active-filter');
+        // You can add your filter logic here (e.g., AJAX/filter listings)
+        const filterName = this.querySelector('p').innerText.trim();
+        window.location.href = `/listings?category=${encodeURIComponent(filterName)}`;
+      });
+    });
 </script>

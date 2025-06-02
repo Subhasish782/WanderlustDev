@@ -20,6 +20,23 @@
           </div>
 
         <div class="mb-3">
+            <label for="category">Category:</label>
+            <select id="category" name="listing[category]" class="form-control" required>
+                <option value="trending">Trending</option>
+                <option value="rooms">Rooms</option>
+                <option value="iconic-cities">Iconic Cities</option>
+                <option value="castles">Castles</option>
+                <option value="pools">Amazing Pools</option>
+                <option value="camping">Camping</option>
+                <option value="farms">Farms</option>
+                <option value="arctic">Arctic</option>
+                <option value="domes">Domes</option>
+                <option value="boats">Boats</option>
+            </select>
+            <div class="invalid-feedback">Please select a category.</div>
+        </div>
+
+        <div class="mb-3">
             <label for="image" class="form-label"> Upload Listing Image: </label>
             <input name="listing[image]"  type="file" class="form-control" required/>
         </div>
