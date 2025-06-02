@@ -3,6 +3,10 @@ if (process.env.NODE_ENV != "production") {
 } 
 
 
+// console.log('Environment:', process.env.NODE_ENV);
+// console.log('MongoDB URL exists:', !!process.env.ATLAS_URL);
+// console.log('Secret exists:', !!process.env.SECRET);
+
 // Import required packages
 const express = require('express');
 const app = express();
