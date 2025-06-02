@@ -39,8 +39,17 @@ main()
     console.log(err);
 });
 
-async function main() {  
-    await mongoose.connect(dbUrl);  
+// async function main() {  
+//     await mongoose.connect(dbUrl);  
+// }
+async function main() {
+    try {
+        await mongoose.connect(dbUrl);
+        console.log("Connected to MongoDB");
+    } catch (error) {
+        console.error("MongoDB connection error:", error);
+        process.exit(1);
+    }
 }
 
 // App Configuration
@@ -71,11 +80,11 @@ const sessionOptions = {
     secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
-    // cookie: {
-    //     httpOnly: true,
-    //     expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // expires in 1 week
-    //     maxAge: 1000 * 60 * 60 * 24 * 7
-    // }
+    cookie: {
+        httpOnly: true,
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7, // expires in 1 week
+        maxAge: 1000 * 60 * 60 * 24 * 7
+    }
 };
 
 app.use(session(sessionOptions));
