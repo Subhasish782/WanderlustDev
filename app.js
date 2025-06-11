@@ -3,9 +3,9 @@ if (process.env.NODE_ENV != "production") {
 } 
 
 
-// console.log('Environment:', process.env.NODE_ENV);
-// console.log('MongoDB URL exists:', !!process.env.ATLAS_URL);
-// console.log('Secret exists:', !!process.env.SECRET);
+
+// console.log('MongoDB URL exists:',process.env.ATLAS_URL);
+
 
 // Import required packages
 const express = require('express');
@@ -121,6 +121,10 @@ app.use((err, req, res, next) => {
     let {statusCode=500, message="something went wrong"} = err;
     res.status(statusCode).send(message);
 }); 
+
+app.get("/", (req, res) => {
+    res.redirect("/listings"); // or render a home page if you have one
+});
 
 
 // Server Start
