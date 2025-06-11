@@ -122,6 +122,10 @@ app.use((err, req, res, next) => {
     res.status(statusCode).send(message);
 }); 
 
+app.get('/', (req, res) => {
+  res.send('Wanderlust API is running!');
+});
+
 // Server Start
 app.listen(port, () => {
     console.log("server is listening to port 3000");
