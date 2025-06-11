@@ -21,6 +21,7 @@ const LocalStrategy = require('passport-local');
 const methodOverride = require('method-override');
 const expressError = require('./utils/expressError');
 const User = require('./models/user');
+const port = process.env.PORT 
 
 // Import routes
 const listingsRouter = require("./routes/listing");
@@ -122,6 +123,6 @@ app.use((err, req, res, next) => {
 }); 
 
 // Server Start
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log("server is listening to port 3000");
 });
