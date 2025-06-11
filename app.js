@@ -112,6 +112,13 @@ app.use("/listings", listingsRouter);
 app.use("/listings/:id/reviews", reviewsRouter);
 app.use("/", userRouter);
 
+// app.get("/test", (req, res) => {
+//     res.send("Server is working!");
+// });
+app.get("/", (req, res) => {
+    res.redirect("/listings");
+});
+
 // Error Handling
 app.all("*", (req, res, next) => {
     next(new expressError(404, "Page not found!!"));
@@ -122,8 +129,8 @@ app.use((err, req, res, next) => {
     res.status(statusCode).send(message);
 }); 
 
-app.get("/", (req, res) => {
-    res.redirect("/listings"); // or render a home page if you have one
+app.get("/test", (req, res) => {
+    res.send("Server is working!");
 });
 
 
