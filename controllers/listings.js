@@ -95,23 +95,6 @@ module.exports.destroyListings=async (req, res) => {
     res.redirect("/listings");
 };
 
-// module.exports.searchListings = async (req, res) => {
-//     const query = req.query.q || '';
-//     console.log(req.query.q);
-//     const priceQuery = Number(query);
-//     let searchConditions = [
-//         { title: { $regex: query, $options: 'i' } },
-//         { location: { $regex: query, $options: 'i' } },
-//         { country: { $regex: query, $options: 'i' } },
-//         { description: { $regex: query, $options: 'i' } },
-//         { owner: { $regex: query, $options: 'i' } }
-//     ];
-//     if (!isNaN(priceQuery) && query.trim() !== '') {
-//         searchConditions.push({ price: priceQuery });
-//     }
-//     const allListings = await Listing.find({ $or: searchConditions });
-//     res.render('listings/index', { allListings });
-// };
 module.exports.searchListings = async (req, res) => {
     try {
         const query = req.query.q || '';
@@ -135,6 +118,10 @@ module.exports.searchListings = async (req, res) => {
         const allListings = searchConditions.length > 0
             ? await Listing.find({ $or: searchConditions })
             : await Listing.find({});
+
+        if (allListings.length === 0) {
+            req.flash("error", "No listings found for your search.");
+        }
 
         res.render('listings/index', { allListings });
     } catch (err) {
