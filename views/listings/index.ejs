@@ -164,12 +164,22 @@
     <div><i class="fa-solid fa-sailboat"></i></div>
     <p>Boats</p>
   </div>
+
   <div class="tax-toogle">
     <div class="form-check-reverse form-switch">
-      <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
-      <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+      <input class="form-check-input" 
+      type="checkbox"
+       role="switch" 
+       id="switchCheckDefault"
+       >
+      <label 
+      class="form-check-label" 
+      for="switchCheckDefault">
+      Display total after taxes
+    </label>
     </div>
   </div>
+
 </div>
 
 <div class="row row-cols-lg-3 row-cols-md-3 mt-3 row-cols-sm-1 mt-3">
@@ -197,31 +207,27 @@
 </div>
 
 <script>
-  // let taxSwitch=document.getElementById("switchCheckDefault");
-  // taxSwitch.addEventListener("click",()=> {
-  // let taxInfo=document.getElementsByClassName("tax-info");
-  // for (info of taxInfo) {
-  //   if(info.style.display != "inline") {
-  //     info.style.display = "inline";
-  //   } else {
-  //     info.style.display = "none";
-  //   }
-  // }
-  // })
-    // Existing tax switch code
+    // Restore toggle state from localStorage
     let taxSwitch = document.getElementById("switchCheckDefault");
-    taxSwitch.addEventListener("click", () => {
-      let taxInfo = document.getElementsByClassName("tax-info");
-      for (info of taxInfo) {
-        if (info.style.display != "inline") {
-          info.style.display = "inline";
-        } else {
-          info.style.display = "none";
-        }
+    let taxInfo = document.getElementsByClassName("tax-info");
+    // Set initial state on page load
+    window.addEventListener("DOMContentLoaded", () => {
+      const checked = localStorage.getItem("taxSwitchChecked") === "true";
+      taxSwitch.checked = checked;
+      for (let info of taxInfo) {
+        info.style.display = checked ? "inline" : "none";
       }
     });
-  
-    // Make filters clickable and highlight active one
+    // Save state and toggle tax info on change
+    taxSwitch.addEventListener("change", () => {
+      localStorage.setItem("taxSwitchChecked", taxSwitch.checked);
+      for (let info of taxInfo) {
+        info.style.display = taxSwitch.checked ? "inline" : "none";
+      }
+    });
+
+    // Make filters clickable and highlight active one:-
+
     const filters = document.querySelectorAll('.filter');
     filters.forEach(filter => {
       filter.addEventListener('click', function() {
@@ -231,5 +237,6 @@
         const filterName = this.querySelector('p').innerText.trim();
         window.location.href = `/listings?category=${encodeURIComponent(filterName)}`;
       });
-    });
+    }); 
+
 </script>
